@@ -1,0 +1,20 @@
+<!-- comment_list_for_user_post.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments for {{ comment.user_name }}</title>
+</head>
+<body>
+    <h1>Comments for {{ comment.user.user_name }}</h1>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }}</li>
+        {% empty %}
+            <li>No comments found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Список постів</title>
+    <style>
+        /* Стилізація кнопок */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .btn-secondary {
+            background-color: #008CBA;
+        }
+
+        /* Стилізація для великих заголовків */
+        .large-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список постів</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <p class="large-text"><strong>Автор поста:</strong> {{ post.user.user_name }}</p>
+                <p class="large-text"><strong>Заголовок:</strong> {{ post.title }}</p>
+                {{ post.content }}<br>
+                <!-- Посилання на сторінку перегляду коментарів для цього поста -->
+                <a href="{% url 'comment_list_for_post' post_id=post.id %}" class="btn btn-secondary">Переглянути коментарі</a>
+                <!-- Посилання на сторінку перегляду цього конкретного поста -->
+                <a href="{% url 'post_view' post_id=post.id %}" class="btn">Переглянути пост</a>
+                <!-- Посилання на сторінку додавання коментаря для цього поста -->
+                <a href="{% url 'add_comment_form' %}" class="btn btn-secondary rounded-pill-custom mb-3">Додати коментар до постів</a>
+
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
