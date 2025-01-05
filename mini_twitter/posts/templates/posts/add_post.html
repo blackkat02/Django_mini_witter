@@ -43,12 +43,26 @@
     </style>
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <!-- Display username and "Вийти" button if the user is authenticated -->
+    <div class="d-flex flex-row justify-content-end align-items-center position-fixed top-0 end-0 m-3">
+        <p class="text-green me-3 mb-0">Ласкаво просимо, {{ user.username }}</p>
+        <a href="{% url 'registration:logout_view' %}" class="btn btn-outline-danger rounded-pill-custom mb-3">Вийти</a>
+    </div>
+    {% else %}
+    <!-- Display registration and login buttons if the user is not authenticated -->
+    <div class="d-flex flex-row align-items-end justify-content-end position-fixed top-0 end-0 m-3">
+        <a href="{% url 'registration:registration' %}" class="btn btn-outline-primary rounded-pill-custom mb-3 me-3">Реєстрація</a>
+        <a href="{% url 'registration:user_authentication_view' %}" class="btn btn-outline-success rounded-pill-custom mb-3">Вхід</a>
+    </div>
+    {% endif %}
     <div class="form-container">
-        <form method="post" action="{% url 'add_post' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Додати пост</button>
-        </form>
+    <form method="post" action="{% url 'add_post' %}">
+    {% csrf_token %}
+    <input type="hidden" name="user" value="{{ user.username }}"> {# Приховане поле user #}
+    {{ form.as_p }}
+    <button type="submit">Додати пост</button>
+    </form>
     </div>
 </body>
 </html>

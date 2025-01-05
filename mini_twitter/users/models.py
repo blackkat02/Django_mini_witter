@@ -1,14 +1,11 @@
-#from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.db import models
-
-
-class User(models.Model):
-    user_name = models.CharField(max_length=150)
-    email = models.EmailField()
-    bio = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
-    def __str__(self):
-        return self.user_name
+# from django.contrib.auth.models import AbstractUser
+# from django.db import models
+#
+#
+# class CustomUser(AbstractUser):
+#     bio = models.TextField(blank=True)
+#     image = models.ImageField(upload_to='profile_images', default='profile_images/default.png', blank=True, null=True)
+#     date_of_birth = models.DateField(blank=True, null=True)
+#
+#     def __str__(self):
+#         return self.username

@@ -14,15 +14,31 @@
     </style>
 </head>
 <body>
+    {% if user.is_authenticated %}
+    <!-- Display "Вийти" button if the user is authenticated -->
+    <div class="d-flex flex-row justify-content-end align-items-center position-fixed top-0 end-0 m-3">
+        <p class="text-green me-3 mb-0">Ласкаво просимо, {{ user.username }}</p>
+        <a href="{% url 'registration:logout_view' %}" class="btn btn-outline-danger rounded-pill-custom mb-3">Вийти</a>
+    </div>
+    {% else %}
+    <!-- Display registration and login buttons if the user is not authenticated -->
+    <div class="d-flex flex-row align-items-end justify-content-end position-fixed top-0 end-0 m-3">
+        <a href="{% url 'registration:registration' %}" class="btn btn-outline-primary rounded-pill-custom mb-3 me-3">Реєстрація</a>
+        <a href="{% url 'registration:user_authentication_view' %}" class="btn btn-outline-success rounded-pill-custom mb-3">Вхід</a>
+    </div>
+    {% endif %}
     <div class="container py-5">
         <h1 class="text-center">Вітаємо на нашому сайті!</h1>
         <p class="text-center">Оберіть один із наступних варіантів:</p>
         <div class="d-flex flex-column align-items-center">
             <a href="{% url 'add_post' %}" class="btn btn-primary rounded-pill-custom mb-3">Додати новий пост</a>
             <a href="{% url 'post_list' %}" class="btn btn-success rounded-pill-custom mb-3">Переглянути список постів</a>
-            <a href="{% url 'user_list' %}" class="btn btn-danger rounded-pill-custom mb-3">Переглянути список користувачів</a>
-            <a href="{% url 'add_comment_form' %}" class="btn btn-danger rounded-pill-custom mb-3">Додати коментар</a>
+            <a href="{% url 'registration:user_list' %}" class="btn btn-danger rounded-pill-custom mb-3">Переглянути список користувачів</a>
+
+            <a href="{% url 'registration:user_list' %}" class="btn btn-danger rounded-pill-custom mb-3">Додати коментар</a>
+
             <a href="{% url 'comment_list' %}" class="btn btn-danger rounded-pill-custom mb-3">Переглянути список коментарів</a>
+
         </div>
     </div>
 

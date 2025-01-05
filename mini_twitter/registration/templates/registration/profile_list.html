@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile List</title>
+</head>
+<body>
+    <h1>User Profile List</h1>
+    <ul>
+        {% for user in users %}
+    <div class="user-profile">
+        <h3>{{ user.user.username }}</h3>
+        <!-- Other profile information -->
+        <a href="{% url 'registration:profile_view' user.id %}">View Profile</a>
+    </div>
+{% endfor %}
+    </ul>
+</body>
+</html>
+This template iterates over the users queryset passed from the view and displays a list of user profiles. Each user profile is displayed as a list item, with a link to view the profile detail using the profile_view URL pattern. Adjust the URL pattern name if it's different in your project.
+
+
+
+
+
+

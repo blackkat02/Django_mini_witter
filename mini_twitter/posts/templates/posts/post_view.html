@@ -5,7 +5,7 @@
     <title>{{ post.title }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
-        /* Додайте сюди будь-які власні стилі (необов'язково) */
+        /* Add your custom styles here (optional) */
         body {
             padding-top: 20px;
         }
@@ -28,37 +28,51 @@
         .post-buttons {
             margin-top: 10px;
         }
+        .like-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            outline: none;
+            color: red; /* Change the color of the heart */
+            width: 24px; /* Adjust the size of the heart */
+            height: 24px;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="post-container">
-            <h1 class="post-title">{{ post.title }}</h1>
-            <p class="post-author">
-                Опубліковано {{ post.created_at }} by {{ user.username }}
-            </p>
-            <div class="post-content">
-                {{ post.content }}
-            </div>
-            <div class="post-buttons">
-                <a href="{% url 'add_comment_form' %}" class="btn btn-primary">
-                    Додати коментар
-                </a>
-                <a href="{% url 'comment_list_for_post' post.id %}" class="btn btn-info">
-                    Переглянути коментарі
-                </a>
-                <a href="{% url 'post_list' %}" class="btn btn-secondary">
-                    Повернутися до списку постів
-                </a>
-            </div>
+    <div class="post-container">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <p class="post-author">
+            Опубліковано {{ post.created_at }} by {{ post.user.username }}
+        </p>
+        <div class="post-content">
+            {{ post.content }}
+        </div>
+        <div class="post-likes_count">
+            <p>Likes: {{ post.likes_count }}</p>
+        </div>
+        <div class="post-buttons">
+            <a href="{% url 'add_comment_form' post_id=post.id %}" class="btn btn-primary">Додати коментар</a>
+            <a href="{% url 'comment_list_for_post' post.id %}" class="btn btn-info">Переглянути коментарі</a>
+            <a href="{% url 'post_list' %}" class="btn btn-secondary">Повернутися до списку постів</a>
+            <form action="{% url 'like_form' post.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="like-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#FF0000" viewBox="0 0 24 24" width="24px" height="24px">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    {{ post.likes_count }}
+                </button>
+            </form>
+
         </div>
     </div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jC8C6OIWjk7qEdqOObYkENiWqEOBsY" crossorigin="anonymous"></script>
-</body>
-</html>
-
-
-    <!-- Підключення Bootstrap Bundle з Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

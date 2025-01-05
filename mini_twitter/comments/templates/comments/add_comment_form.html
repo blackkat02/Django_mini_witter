@@ -22,11 +22,12 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <form method="post" enctype="multipart/form-data" action="{% url 'add_comment_form' %}">
+                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Add Comment</button>
-                </form>
+                        <input type="hidden" name="post_id" value="{{ comment.post_id }}">
+                        {{ form.as_p }}
+                        <button type="submit">Submit</button>
+                 </form>
             </div>
         </div>
     </div>

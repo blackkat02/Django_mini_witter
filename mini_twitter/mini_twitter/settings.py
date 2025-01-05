@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.urls import reverse_lazy
+#from users.views import CsrfFailureView
+#from django.views.generic import TemplateView
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,7 +29,6 @@ SECRET_KEY = 'django-insecure-93jns+hvnn!t_qm#b)vs73v9s)dul827livlhw(f+x0j__tvv)
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -42,7 +43,9 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'comments.apps.CommentsConfig',
     'mini_twitter',
-    'start_page.apps.StartPageConfig'
+    'start_page.apps.StartPageConfig',
+    'registration.apps.RegistrationConfig',
+    'follows.apps.FollowsConfig',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +63,7 @@ ROOT_URLCONF = 'mini_twitter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  #os.path.join(BASE_DIR, 'templates')
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,22 +78,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mini_twitter.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mini_twitter_db',       # Имя вашей базы данных
-        'USER': 'mini_twitter_user',          # Имя пользователя PostgreSQL
-        'PASSWORD': 'password',     # Пароль пользователя PostgreSQL
-        'HOST': 'localhost',             # Хост базы данных
-        'PORT': '5432',                  # Порт базы данных
+        'NAME': 'mini_twitter_db',  # Имя вашей базы данных
+        'USER': 'mini_twitter_user',  # Имя пользователя PostgreSQL
+        'PASSWORD': 'password',  # Пароль пользователя PostgreSQL
+        'HOST': 'localhost',  # Хост базы данных
+        'PORT': '5432',  # Порт базы данных
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -110,6 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -122,13 +125,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-#STATICFILES_DIRS = [os.path.join(BASE-DIR, 'static')]
-#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# STATICFILES_DIRS = [os.path.join(BASE-DIR, 'static')]
+# BASE_DIR = os.path.dir-name(os.path.dir-name(os.path.abspath(__file__)))
 
 # ...
 
@@ -136,11 +138,21 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#MEDIA_ROOT = BASE_DIR / "media"
+# MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'registration.CustomUser'
+
+
+# def get_login_redirect_url():
+#     return reverse_lazy('user_list')
+
+LOGIN_REDIRECT_URL = reverse_lazy('user_list')
+
+LOGIN_URL = 'registration:user_authentication_view'
+
+#CSRF_FAILURE_VIEW = 'users.views.fault'

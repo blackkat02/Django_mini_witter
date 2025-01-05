@@ -1,0 +1,29 @@
+<!-- registration.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+
+<!-- Check if the user is authenticated -->
+{% if user.is_authenticated %}
+    <!-- Display welcome message and logout button -->
+    <div class="d-flex flex-row justify-content-end align-items-center position-fixed top-0 end-0 m-3">
+        <p class="text-green me-3 mb-0">Ласкаво просимо, {{ user.username }}</p>
+        <a href="{% url 'registration:logout_view' %}" class="btn btn-outline-danger rounded-pill-custom mb-3">Вийти</a>
+    </div>
+{% else %}
+    <!-- If the user is not authenticated, display the registration form -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+    </form>
+{% endif %}
+
+</body>
+</html>

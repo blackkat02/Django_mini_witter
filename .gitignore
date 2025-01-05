@@ -1,1 +1,26 @@
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Python cache
+*.pyo
+*.pyd
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Environment variables
+mini_twitter/.env
+mini_twitter/docker-compose.yml
+
+# Dependency directories
 venv/
+env/
+mini_twitter/media/
